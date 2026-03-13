@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK Matcha — Organic Ceremonial Grade</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #7A9E7E;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --cream: #FAFAF6;
+    --white: #FFFFFF;
+    --dark: #1C1C1A;
+    --grey: #6B6B6B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--white);
+    color: var(--dark);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--gold); border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    width: 34px; height: 34px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transition: width 0.3s, height 0.3s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    padding: 24px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    transition: padding 0.3s;
+  }
+  nav.scrolled { padding: 15px 60px; }
+  .nav-logo {
+    font-family: 'Cinzel', serif; font-size: 17px;
+    letter-spacing: 0.22em; color: var(--dark); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--dark); text-decoration: none; font-weight: 300;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* SCROLL DOTS */
+  .scroll-dots {
+    position: fixed; right: 30px; top: 50%;
+    transform: translateY(-50%); z-index: 100;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .sdot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #ccc; cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .sdot.active { background: var(--gold); transform: scale(1.5); }
+
+  /* ===== HERO ===== */
+  #hero {
+    height: 100vh; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; background: var(--white);
+  }
+  .hero-bg-kanji {
+    position: absolute;
+    font-size: clamp(160px, 26vw, 360px); font-family: serif;
+    color: rgba(122,158,126,0.04);
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    pointer-events: none; user-select: none; white-space: nowrap;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1.1fr 1fr;
+    align-items: center; gap: 50px;
+    max-width: 1280px; width: 100%;
+    padding: 100px 60px 60px; position: relative; z-index: 2;
+  }
+  .hero-left {
+    opacity: 0; transform: translateX(-50px);
+    animation: slideL 1.2s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
+  }
+  .hero-right {
+    opacity: 0; transform: translateX(50px);
+    animation: slideR 1.2s cubic-bezier(0.22,1,0.36,1) 0.4s forwards;
+  }
+  .eyebrow {
+    font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::before { content:''; width:24px; height:1px; background:var(--gold); }
+  .hero-h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px,5.5vw,82px); font-weight: 600;
+    line-height: 1.05; color: var(--dark); margin-bottom: 28px;
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(17px,1.8vw,23px); color: var(--grey);
+    line-height: 1.65; margin-bottom: 44px;
+  }
+  .gold-div { width: 48px; height: 1px; background: var(--gold); margin-bottom: 44px; }
+  .btn-gold {
+    display: inline-block; padding: 15px 44px;
+    border: 1px solid var(--gold);
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--dark); text-decoration: none;
+    position: relative; overflow: hidden; transition: color 0.4s;
+  }
+  .btn-gold::before {
+    content:''; position: absolute; inset:0; background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1); z-index:-1;
+  }
+  .btn-gold:hover::before { transform: scaleX(1); }
+  .btn-gold:hover { color: white; }
+
+  .hero-img-stage {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: translateY(40px) scale(0.94);
+    animation: riseIn 1.4s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+  }
+  .hero-img-stage img {
+    width: clamp(260px,28vw,400px); display: block;
+    filter: drop-shadow(0 50px 80px rgba(122,158,126,0.28));
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.7s;
+    position: relative; z-index: 3;
+  }
+  .hero-img-stage:hover img {
+    transform: translateY(-16px) scale(1.03);
+    filter: drop-shadow(0 70px 100px rgba(122,158,126,0.42));
+  }
+  .orbit {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.12);
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+  }
+  .orbit-1 { width:115%; height:115%; animation: spin 18s linear infinite; }
+  .orbit-2 { width:140%; height:140%; border-style:dashed; border-color:rgba(201,168,76,0.06); animation: spin 30s linear infinite reverse; }
+
+  .detail-item { margin-bottom: 20px; }
+  .detail-label { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--grey); margin-bottom:4px; }
+  .detail-value { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:22px; color:var(--dark); }
+  .detail-sep { width:100%; height:1px; background:rgba(201,168,76,0.15); margin:18px 0; }
+
+  .scroll-cue {
+    position: absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    opacity:0; animation: fadeUp 1s ease 1.8s forwards;
+  }
+  .scroll-cue span { font-size:8px; letter-spacing:0.45em; text-transform:uppercase; color:var(--grey); }
+  .scroll-line {
+    width:1px; height:55px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+    animation: linePulse 2.2s ease infinite;
+  }
+
+  /* ===== STORY ===== */
+  #story {
+    background: var(--cream); min-height: 100vh;
+    display: flex; align-items: center;
+  }
+  .story-inner {
+    max-width:1200px; margin:0 auto; padding:120px 60px;
+    display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center;
+  }
+  .story-left { position:relative; }
+  .big-num {
+    font-family:'Cormorant Garamond',serif; font-size:200px; font-weight:300;
+    color:rgba(122,158,126,0.07); position:absolute; top:-50px; left:-10px;
+    line-height:1; pointer-events:none;
+  }
+  .section-tag {
+    font-size:9px; letter-spacing:0.45em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:22px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .section-tag::before { content:''; width:28px; height:1px; background:var(--gold); }
+  .section-h2 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(34px,4vw,56px); font-weight:300;
+    line-height:1.2; color:var(--dark); margin-bottom:30px;
+  }
+  .section-h2 em { font-style:italic; color:var(--sage); }
+  .body-text { font-weight:300; font-size:15px; line-height:2.1; color:var(--grey); margin-bottom:18px; }
+  .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .stat-card {
+    padding:28px 22px; border:1px solid rgba(201,168,76,0.18);
+    transition:border-color 0.3s; position:relative; overflow:hidden;
+  }
+  .stat-card::after {
+    content:''; position:absolute; left:0; bottom:0;
+    width:100%; height:2px;
+    background:linear-gradient(to right, var(--gold), transparent);
+    transform:scaleX(0); transform-origin:left; transition:transform 0.4s;
+  }
+  .stat-card:hover::after { transform:scaleX(1); }
+  .stat-card:hover { border-color:rgba(201,168,76,0.45); }
+  .stat-n { font-family:'Cormorant Garamond',serif; font-size:46px; font-weight:300; line-height:1; color:var(--dark); margin-bottom:6px; }
+  .stat-n sup { font-size:20px; color:var(--gold); }
+  .stat-l { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--grey); }
+
+  /* ===== DECONSTRUCTED ===== */
+  #deconstruct {
+    min-height:100vh; background:var(--white);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .dec-inner { max-width:1100px; width:100%; padding:100px 60px; text-align:center; }
+  .divider-label {
+    font-size:9px; letter-spacing:0.5em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:60px;
+    display:flex; align-items:center; justify-content:center; gap:20px;
+  }
+  .divider-label::before, .divider-label::after {
+    content:''; flex:1; max-width:80px; height:1px;
+    background:linear-gradient(to right, transparent, var(--gold));
+  }
+  .divider-label::after { background:linear-gradient(to left, transparent, var(--gold)); }
+  .dec-img-wrap {
+    position:relative; display:inline-block; max-width:860px; width:100%;
+    opacity:0; transform:scale(0.88);
+    transition: opacity 1.1s ease, transform 1.3s cubic-bezier(0.22,1,0.36,1);
+  }
+  .dec-img-wrap.visible { opacity:1; transform:scale(1); }
+  .dec-img-wrap img {
+    width:100%; display:block;
+    filter:drop-shadow(0 40px 80px rgba(122,158,126,0.2));
+  }
+  .dec-caption {
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:20px; color:var(--grey); margin-top:48px; line-height:1.9;
+  }
+  .dec-caption small { font-size:13px; color:#aaa; letter-spacing:0.1em; }
+
+  /* ===== VIDEO SECTIONS ===== */
+  .vid-section {
+    height:100vh; position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    background:#080d08;
+  }
+  .vid-section video {
+    position:absolute; inset:0;
+    width:100%; height:100%; object-fit:cover; opacity:0.75;
+  }
+  .shimmer { position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(to right, transparent, var(--gold), transparent); opacity:0.35; }
+
+  /* video 1 overlay — centered */
+  .v1-overlay {
+    position:relative; z-index:2;
+    text-align:center; padding:60px; pointer-events:none;
+  }
+  .v-tag { font-size:9px; letter-spacing:0.5em; text-transform:uppercase; color:rgba(201,168,76,0.8); margin-bottom:24px; }
+  .v1-h2 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(56px,9vw,130px); font-weight:300;
+    color:white; line-height:1; margin-bottom:32px;
+  }
+  .v1-h2 em { font-style:italic; color:var(--gold-light); }
+  .v-body {
+    font-weight:300; font-size:14px; color:rgba(255,255,255,0.55);
+    letter-spacing:0.08em; line-height:2.1; max-width:380px; margin:0 auto;
+  }
+
+  /* video 2 overlay — left aligned */
+  .v2-overlay {
+    position:relative; z-index:2;
+    display:flex; align-items:center;
+    max-width:1200px; width:100%; padding:0 80px;
+  }
+  .v2-text { flex:1; }
+  .v2-h2 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(40px,6vw,86px); font-weight:300;
+    color:white; line-height:1.1; margin-bottom:28px;
+  }
+  .v2-h2 em { color:var(--gold-light); font-style:italic; }
+  .v2-body {
+    font-weight:300; font-size:14px; color:rgba(255,255,255,0.55);
+    line-height:2.1; max-width:340px; margin-bottom:36px; letter-spacing:0.06em;
+  }
+  .btn-white {
+    display:inline-block; padding:15px 44px;
+    border:1px solid rgba(255,255,255,0.4);
+    font-size:10px; letter-spacing:0.35em; text-transform:uppercase;
+    color:white; text-decoration:none; transition:all 0.4s; pointer-events:all;
+  }
+  .btn-white:hover { background:var(--gold); border-color:var(--gold); }
+
+  /* ===== PRODUCT ===== */
+  #product { min-height:100vh; background:var(--cream); display:flex; align-items:center; }
+  .product-inner {
+    max-width:1200px; margin:0 auto; padding:120px 60px;
+    display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+  }
+  .product-img { position:relative; text-align:center; }
+  .product-img img {
+    width:80%;
+    filter:drop-shadow(0 40px 60px rgba(0,0,0,0.1));
+    transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .product-img:hover img { transform:translateY(-12px) scale(1.02); }
+  .product-badge {
+    position:absolute; top:0; right:8%;
+    width:78px; height:78px; border-radius:50%;
+    background:var(--gold);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-size:9px; letter-spacing:0.1em; text-transform:uppercase;
+    color:white; text-align:center; line-height:1.5;
+    animation:spin 20s linear infinite;
+  }
+  .features { list-style:none; margin:28px 0 44px; }
+  .features li {
+    display:flex; align-items:flex-start; gap:14px;
+    padding:14px 0; border-bottom:1px solid rgba(201,168,76,0.14);
+    font-weight:300; font-size:14px; color:var(--grey); line-height:1.6;
+  }
+  .features li::before { content:'✦'; color:var(--gold); font-size:9px; margin-top:5px; flex-shrink:0; }
+  .price-row { display:flex; align-items:baseline; gap:28px; margin-bottom:32px; }
+  .price-big { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--dark); }
+  .price-note { font-size:12px; color:var(--grey); line-height:1.7; }
+  .btn-dark {
+    display:inline-block; padding:17px 54px;
+    background:var(--dark); color:white;
+    font-size:10px; letter-spacing:0.35em; text-transform:uppercase;
+    text-decoration:none; position:relative; overflow:hidden;
+    transition:color 0.4s; margin-right:18px;
+  }
+  .btn-dark::before {
+    content:''; position:absolute; inset:0; background:var(--gold);
+    transform:scaleY(0); transform-origin:bottom;
+    transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  }
+  .btn-dark:hover::before { transform:scaleY(1); }
+  .btn-dark span { position:relative; z-index:1; }
+  .btn-outline {
+    display:inline-block; padding:17px 40px;
+    border:1px solid rgba(0,0,0,0.2);
+    font-size:10px; letter-spacing:0.35em; text-transform:uppercase;
+    color:var(--dark); text-decoration:none; transition:all 0.4s;
+  }
+  .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* FOOTER */
+  footer { background:var(--dark); padding:80px 60px 40px; }
+  .footer-top {
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding-bottom:56px; border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:36px;
+  }
+  .f-logo { font-family:'Cinzel',serif; font-size:26px; color:white; letter-spacing:0.2em; }
+  .f-logo small { display:block; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--gold); letter-spacing:0.1em; margin-top:4px; }
+  .f-cols { display:flex; gap:60px; }
+  .f-col h4 { font-size:9px; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; }
+  .f-col a { display:block; font-weight:300; font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none; margin-bottom:11px; transition:color 0.3s; }
+  .f-col a:hover { color:white; }
+  .footer-bottom { display:flex; justify-content:space-between; align-items:center; }
+  .f-copy { font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:0.08em; }
+  .f-social { display:flex; gap:14px; }
+  .f-social a { width:34px; height:34px; border-radius:50%; border:1px solid rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.4); text-decoration:none; font-size:12px; transition:all 0.3s; }
+  .f-social a:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes slideL { to { opacity:1; transform:translateX(0); } }
+  @keyframes slideR { to { opacity:1; transform:translateX(0); } }
+  @keyframes riseIn { to { opacity:1; transform:translateY(0) scale(1); } }
+  @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
+  @keyframes fadeUp { to { opacity:1; } }
+  @keyframes linePulse { 0%,100%{opacity:0.4;transform:scaleY(1);} 50%{opacity:1;transform:scaleY(1.2);} }
+
+  /* Reveal */
+  .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+  .reveal.up { opacity:1; transform:translateY(0); }
+  .d1 { transition-delay:0.15s; } .d2 { transition-delay:0.3s; } .d3 { transition-delay:0.45s; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<nav id="nav">
+  <a href="#hero" class="nav-logo">AK Matcha</a>
+  <ul class="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#deconstruct">Ingredients</a></li>
+    <li><a href="#product">Shop</a></li>
+    <li><a href="#product">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="scroll-dots">
+  <div class="sdot active" onclick="goTo('hero')"></div>
+  <div class="sdot" onclick="goTo('story')"></div>
+  <div class="sdot" onclick="goTo('deconstruct')"></div>
+  <div class="sdot" onclick="goTo('video1')"></div>
+  <div class="sdot" onclick="goTo('video2')"></div>
+  <div class="sdot" onclick="goTo('nutrition')"></div>
+  <div class="sdot" onclick="goTo('product')"></div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-kanji">抹茶</div>
+  <div class="hero-grid">
+    <div class="hero-left">
+      <p class="eyebrow">Organic · Ceremonial Grade</p>
+      <h1 class="hero-h1">AK<br>Matcha</h1>
+      <div class="gold-div"></div>
+      <p class="hero-sub">Pure organic matcha,<br>crafted for the<br>discerning palate.</p>
+      <a href="#product" class="btn-gold">Shop Now</a>
+    </div>
+    <div class="hero-img-stage">
+      <div class="orbit orbit-1"></div>
+      <div class="orbit orbit-2"></div>
+      <img src="hero_image.png" alt="AK Matcha" id="heroImg">
+    </div>
+    <div class="hero-right">
+      <div class="detail-item"><div class="detail-label">Grade</div><div class="detail-value">Ceremonial</div></div>
+      <div class="detail-sep"></div>
+      <div class="detail-item"><div class="detail-label">Certified</div><div class="detail-value">100% Organic</div></div>
+      <div class="detail-sep"></div>
+      <div class="detail-item"><div class="detail-label">Harvest</div><div class="detail-value">First Spring</div></div>
+      <div class="detail-sep"></div>
+      <div class="detail-item"><div class="detail-label">Net Weight</div><div class="detail-value">30g / 1.05 oz</div></div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <span>Scroll to explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PARALLAX SCROLL TRANSITION -->
+<div id="parallax-wrapper" style="height:300vh; position:relative;">
+  <div id="parallax-sticky" style="position:sticky; top:0; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--white);">
+
+    <!-- Background text that fades -->
+    <div id="px-bg" style="position:absolute; font-family:serif; font-size:clamp(140px,22vw,320px); color:rgba(122,158,126,0.04); pointer-events:none; user-select:none; transition:opacity 0.1s;">抹茶</div>
+
+    <!-- Hero image (fades out) -->
+    <div id="px-hero-wrap" style="position:absolute; display:flex; align-items:center; justify-content:center; width:100%; height:100%;">
+      <img id="px-hero" src="hero_image.png" alt="AK Matcha"
+        style="width:clamp(260px,26vw,380px); filter:drop-shadow(0 50px 80px rgba(122,158,126,0.3)); transition:none;">
+    </div>
+
+    <!-- Deconstructed image (fades in, scales up) -->
+    <div id="px-dec-wrap" style="position:absolute; display:flex; align-items:center; justify-content:center; width:100%; height:100%; opacity:0;">
+      <img id="px-dec" src="deconstructed.png" alt="AK Matcha Deconstructed"
+        style="width:clamp(400px,55vw,780px); filter:drop-shadow(0 40px 80px rgba(122,158,126,0.2)); transition:none;">
+    </div>
+
+    <!-- Step 1 text (shows early) -->
+    <div id="px-text-1" style="position:absolute; bottom:80px; left:50%; transform:translateX(-50%); text-align:center; opacity:0; white-space:nowrap;">
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(18px,2vw,26px); color:var(--grey);">Pure organic matcha — ceremonial grade</p>
+      <div style="width:40px; height:1px; background:var(--gold); margin:12px auto 0;"></div>
+    </div>
+
+    <!-- Step 2 text (shows during explosion) -->
+    <div id="px-text-2" style="position:absolute; bottom:80px; left:50%; transform:translateX(-50%); text-align:center; opacity:0; white-space:nowrap;">
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(18px,2vw,26px); color:var(--grey);">Stone-ground leaves · Bamboo whisk · Ceramic bowl</p>
+      <div style="width:40px; height:1px; background:var(--gold); margin:12px auto 0;"></div>
+    </div>
+
+    <!-- Scroll progress indicator -->
+    <div id="px-progress" style="position:absolute; left:60px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:8px; align-items:center;">
+      <div id="px-step1" style="width:5px; height:5px; border-radius:50%; background:var(--gold); transition:transform 0.3s;"></div>
+      <div style="width:1px; height:40px; background:rgba(201,168,76,0.2);"></div>
+      <div id="px-step2" style="width:5px; height:5px; border-radius:50%; background:#ddd; transition:all 0.3s;"></div>
+      <div style="width:1px; height:40px; background:rgba(201,168,76,0.2);"></div>
+      <div id="px-step3" style="width:5px; height:5px; border-radius:50%; background:#ddd; transition:all 0.3s;"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STORY -->
+<section id="story">
+  <div class="story-inner">
+    <div class="story-left reveal">
+      <div class="big-num">01</div>
+      <p class="section-tag">Our Story</p>
+      <h2 class="section-h2">The art of<br><em>pure ceremony</em></h2>
+      <p class="body-text">Every tin of AK Matcha is a celebration of what pure, organic matcha should be. Stone-ground at peak harvest to lock in vivid emerald colour and deep, naturally sweet umami — no bitterness, no compromise.</p>
+      <p class="body-text">We believe the ritual of matcha is as nourishing as the tea itself. From the first sift to the final sip, AK Matcha transforms each morning into a moment of intention.</p>
+    </div>
+    <div class="stats-grid reveal d2">
+      <div class="stat-card"><div class="stat-n">137<sup>×</sup></div><div class="stat-l">More antioxidants than green tea</div></div>
+      <div class="stat-card"><div class="stat-n">1<sup>st</sup></div><div class="stat-l">Harvest — peak flavour & nutrients</div></div>
+      <div class="stat-card"><div class="stat-n">30<sup>d</sup></div><div class="stat-l">Shade grown before harvest</div></div>
+      <div class="stat-card"><div class="stat-n">100<sup>%</sup></div><div class="stat-l">Organic & pesticide free</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAME SCROLL 1 -->
+<div id="fs1-wrapper" style="height:250vh; position:relative;">
+  <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:#050a05;">
+    <canvas id="fs1-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></canvas>
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(5,10,5,0.3), transparent 40%, transparent 60%, rgba(5,10,5,0.5)); pointer-events:none;"></div>
+    <div id="fs1-text" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px; pointer-events:none; transition:opacity 0.4s;">
+      <p style="font-size:9px; letter-spacing:0.5em; text-transform:uppercase; color:rgba(201,168,76,0.8); margin-bottom:24px;">The Experience</p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(56px,9vw,120px); font-weight:300; color:white; line-height:1; margin-bottom:28px;">Ritual<br>in every<br><em style="color:#E8C96A;">sip</em></h2>
+      <p style="font-weight:300; font-size:14px; color:rgba(255,255,255,0.55); letter-spacing:0.08em; line-height:2.1; max-width:360px;">Begin your morning with intention. AK Matcha is not just a drink — it is a practice, a pause, a return to what matters.</p>
+    </div>
+    <div style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none;">
+      <span id="fs1-counter" style="font-size:10px; letter-spacing:0.3em; color:rgba(201,168,76,0.5);">01 / 121</span>
+      <div style="width:80px; height:1px; background:rgba(201,168,76,0.2); position:relative; overflow:hidden;">
+        <div id="fs1-bar" style="position:absolute; left:0; top:0; height:100%; background:var(--gold); width:0%; transition:width 0.1s;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FRAME SCROLL 2 -->
+<div id="fs2-wrapper" style="height:250vh; position:relative;">
+  <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:#030805;">
+    <canvas id="fs2-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></canvas>
+    <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(3,8,5,0.75) 0%, rgba(3,8,5,0.4) 50%, transparent 100%); pointer-events:none;"></div>
+    <div id="fs2-text" style="position:absolute; inset:0; display:flex; align-items:center; padding:0 80px; pointer-events:none;">
+      <div style="max-width:500px;">
+        <p style="font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(201,168,76,0.85); margin-bottom:22px; display:flex; align-items:center; gap:14px;"><span style="display:inline-block; width:28px; height:1px; background:var(--gold);"></span>Pure Craft</p>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(40px,6vw,86px); font-weight:300; color:white; line-height:1.1; margin-bottom:28px;">Taste that<br><em style="color:#E8C96A;">speaks</em><br>for itself</h2>
+        <p style="font-weight:300; font-size:14px; color:rgba(255,255,255,0.55); line-height:2.1; max-width:340px; margin-bottom:36px;">Shade-grown, hand-picked at peak harvest, stone-ground to perfection. Remarkably smooth, naturally sweet — zero bitterness, exceptional in every cup.</p>
+        <a href="#product" style="display:inline-block; padding:15px 44px; border:1px solid rgba(255,255,255,0.4); font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:white; text-decoration:none; transition:all 0.4s; pointer-events:all;" onmouseover="this.style.background='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,0.4)'">Discover More</a>
+      </div>
+    </div>
+    <div style="position:absolute; bottom:30px; right:60px; display:flex; flex-direction:column; align-items:flex-end; gap:8px; pointer-events:none;">
+      <span id="fs2-counter" style="font-size:10px; letter-spacing:0.3em; color:rgba(201,168,76,0.5);">01 / 121</span>
+      <div style="width:80px; height:1px; background:rgba(201,168,76,0.2); position:relative; overflow:hidden;">
+        <div id="fs2-bar" style="position:absolute; left:0; top:0; height:100%; background:var(--gold); width:0%; transition:width 0.1s;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NUTRITION -->
+<section id="nutrition" style="background:var(--white); min-height:100vh; display:flex; align-items:center;">
+  <div style="max-width:1200px; margin:0 auto; padding:120px 60px; width:100%;">
+    <div style="text-align:center; margin-bottom:80px;" class="reveal">
+      <p class="section-tag" style="justify-content:center;">Why Matcha</p>
+      <h2 class="section-h2" style="max-width:500px; margin:0 auto;">Nourish your body,<br><em>elevate your mind</em></h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:rgba(201,168,76,0.1);">
+
+      <div class="nutr-card reveal" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
+        <div style="font-size:48px; margin-bottom:20px;">🧠</div>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Calm Focus</h3>
+        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">Rich in L-theanine, AK Matcha promotes a state of relaxed alertness — sharp mental clarity without the jitters or crash of coffee.</p>
+      </div>
+
+      <div class="nutr-card reveal d1" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
+        <div style="font-size:48px; margin-bottom:20px;">⚡</div>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Clean Energy</h3>
+        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">Natural caffeine paired with L-theanine delivers sustained, smooth energy that lasts for hours — perfect for morning rituals or afternoon focus sessions.</p>
+      </div>
+
+      <div class="nutr-card reveal d2" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
+        <div style="font-size:48px; margin-bottom:20px;">🛡️</div>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Antioxidant Power</h3>
+        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">137× more antioxidants than standard green tea. Packed with EGCG catechins that protect cells, reduce inflammation, and support long-term health.</p>
+      </div>
+
+      <div class="nutr-card reveal" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
+        <div style="font-size:48px; margin-bottom:20px;">💚</div>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Gut & Metabolism</h3>
+        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">Naturally supports a healthy metabolism and digestive balance. Zero sugar, zero additives — just pure organic matcha as nature intended.</p>
+      </div>
+
+      <div class="nutr-card reveal d1" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
+        <div style="font-size:48px; margin-bottom:20px;">✨</div>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Skin & Glow</h3>
+        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">Chlorophyll and antioxidants work together to detoxify, reduce redness, and support a natural radiant complexion from the inside out.</p>
+      </div>
+
+      <div class="nutr-card reveal d2" style="background:var(--cream); padding:52px 40px; border:1px solid rgba(201,168,76,0.25); text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.4s;">
+        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:22px; color:var(--grey); line-height:1.8; margin-bottom:20px;">"Remarkably smooth,<br>naturally sweet —<br>the finest cup we've tasted."</p>
+        <div style="width:30px; height:1px; background:var(--gold); margin-bottom:16px;"></div>
+        <p style="font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold);">Taste Promise</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section id="product" style="background:var(--cream); min-height:100vh; display:flex; align-items:center;">
+  <div style="max-width:1200px; margin:0 auto; padding:120px 60px; width:100%;">
+
+    <div style="text-align:center; margin-bottom:80px;" class="reveal">
+      <p class="section-tag" style="justify-content:center;">Shop</p>
+      <h2 class="section-h2" style="max-width:500px; margin:0 auto;">Choose your<br><em>perfect blend</em></h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:stretch;">
+
+      <!-- Product 1: Ceremonial -->
+      <div class="product-card reveal" style="background:var(--white); border:1px solid rgba(201,168,76,0.2); padding:56px 48px; display:flex; flex-direction:column; position:relative; transition:all 0.4s;">
+        <div style="text-align:center; margin-bottom:40px;">
+          <img src="hero_image.png" alt="AK Matcha Ceremonial" style="width:65%; mix-blend-mode:multiply; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);"
+               onmouseover="this.style.transform='translateY(-10px) scale(1.04)'"
+               onmouseout="this.style.transform='translateY(0) scale(1)'">
+        </div>
+        <p class="section-tag">Ceremonial Grade</p>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:var(--dark); margin-bottom:16px; line-height:1.2;">First Harvest<br><em style="color:var(--sage);">Blend</em></h3>
+        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey); margin-bottom:28px; flex:1;">A smooth, vibrant ceremonial-grade matcha with a naturally sweet flavour and bright vegetal notes. Perfect for daily rituals — beautifully balanced, zero bitterness.</p>
+        <ul style="list-style:none; margin-bottom:36px;">
+          <li style="font-size:12px; color:var(--grey); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.12); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> 100% Organic Certified</li>
+          <li style="font-size:12px; color:var(--grey); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.12); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> 30g tin · ~15–20 servings</li>
+          <li style="font-size:12px; color:var(--grey); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.12); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> Smooth, naturally sweet taste</li>
+          <li style="font-size:12px; color:var(--grey); padding:8px 0; display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> Stone-ground for peak nutrition</li>
+        </ul>
+        <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:28px;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--dark);">$30</span>
+          <span style="font-size:11px; color:var(--grey); line-height:1.7;">Net Wt. 30g / 1.05oz<br>Free shipping over $60</span>
+        </div>
+        <a href="#" class="btn-dark" style="text-align:center;"><span>Add to Cart</span></a>
+      </div>
+
+      <!-- Product 2: Premium Ceremonial -->
+      <div class="product-card reveal d1" style="background:var(--dark); border:1px solid rgba(201,168,76,0.35); padding:56px 48px; display:flex; flex-direction:column; position:relative; transition:all 0.4s;">
+        <div style="position:absolute; top:24px; right:24px; background:var(--gold); color:white; font-size:8px; letter-spacing:0.25em; text-transform:uppercase; padding:6px 14px;">Best Seller</div>
+        <div style="text-align:center; margin-bottom:40px;">
+          <img src="hero_image.png" alt="AK Matcha Premium" style="width:65%; mix-blend-mode:luminosity; opacity:0.92; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);"
+               onmouseover="this.style.transform='translateY(-10px) scale(1.04)'"
+               onmouseout="this.style.transform='translateY(0) scale(1)'">
+        </div>
+        <p class="section-tag" style="color:rgba(201,168,76,0.9);">Premium Ceremonial Grade</p>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:white; margin-bottom:16px; line-height:1.2;">Reserve<br><em style="color:var(--gold-light);">Collection</em></h3>
+        <p style="font-weight:300; font-size:14px; line-height:2; color:rgba(255,255,255,0.6); margin-bottom:28px; flex:1;">Our finest expression — rare first-flush leaves, stone-ground to an ultra-fine powder with an extraordinary depth of flavour. Rich, silky, and intensely umami. A truly exceptional cup.</p>
+        <ul style="list-style:none; margin-bottom:36px;">
+          <li style="font-size:12px; color:rgba(255,255,255,0.6); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.15); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> 100% Organic · Premium Grade</li>
+          <li style="font-size:12px; color:rgba(255,255,255,0.6); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.15); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> 30g tin · ~15–20 servings</li>
+          <li style="font-size:12px; color:rgba(255,255,255,0.6); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.15); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> Rich, silky umami — no bitterness</li>
+          <li style="font-size:12px; color:rgba(255,255,255,0.6); padding:8px 0; display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> Ultra-fine stone-ground powder</li>
+        </ul>
+        <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:28px;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:white;">$45</span>
+          <span style="font-size:11px; color:rgba(255,255,255,0.45); line-height:1.7;">Net Wt. 30g / 1.05oz<br>Free shipping over $60</span>
+        </div>
+        <a href="#" style="display:block; text-align:center; padding:17px 54px; background:var(--gold); color:white; font-size:10px; letter-spacing:0.35em; text-transform:uppercase; text-decoration:none; transition:all 0.4s;"
+           onmouseover="this.style.background='#b8943e'"
+           onmouseout="this.style.background='var(--gold)'">Add to Cart</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="f-logo">AK Matcha<small>Organic Ceremonial Grade Matcha</small></div>
+    <div class="f-cols">
+      <div class="f-col"><h4>Shop</h4><a href="#">Ceremonial Grade — $30</a><a href="#">Premium Ceremonial — $45</a><a href="#">Accessories</a></div>
+      <div class="f-col"><h4>Learn</h4><a href="#">Our Story</a><a href="#">Sourcing</a><a href="#">Brewing Guide</a></div>
+      <div class="f-col"><h4>Connect</h4><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Contact</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="f-copy">© 2026 AK Matcha. All rights reserved.</p>
+    <div class="f-social"><a href="#">✦</a><a href="#">◈</a><a href="#">⬡</a></div>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cur=document.getElementById('cur'), curR=document.getElementById('curR');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    cur.style.transform=`translate(${mx-5}px,${my-5}px)`;
+  });
+  (function animR(){
+    rx+=(mx-rx-17)*0.12; ry+=(my-ry-17)*0.12;
+    curR.style.transform=`translate(${rx}px,${ry}px)`;
+    requestAnimationFrame(animR);
+  })();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{curR.style.width='56px';curR.style.height='56px';});
+    el.addEventListener('mouseleave',()=>{curR.style.width='34px';curR.style.height='34px';});
+  });
+
+
+  // ===== SCROLL-DRIVEN FRAME ANIMATION =====
+  function setupFrameScroll(wrapperId, canvasId, counterId, barId, framesArray) {
+    const wrapper = document.getElementById(wrapperId);
+    const canvas  = document.getElementById(canvasId);
+    const counter = document.getElementById(counterId);
+    const bar     = document.getElementById(barId);
+    if (!wrapper || !canvas || !framesArray || framesArray.length === 0) return;
+
+    const ctx = canvas.getContext('2d');
+    const imgs = [];
+    let loaded = 0;
+    const total = framesArray.length;
+
+    // Size canvas to window
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawFrame(currentFrame);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Preload all frames
+    framesArray.forEach((src, i) => {
+      const img = new Image();
+      img.onload = () => {
+        loaded++;
+        if (loaded === 1) drawFrame(0); // draw first frame immediately
+      };
+      img.src = src;
+      imgs[i] = img;
+    });
+
+    let currentFrame = 0;
+
+    function drawFrame(idx) {
+      const img = imgs[idx];
+      if (!img || !img.complete) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Cover fit
+      const cr = canvas.width / canvas.height;
+      const ir = img.naturalWidth / img.naturalHeight;
+      let dw, dh, dx, dy;
+      if (cr > ir) { dw = canvas.width; dh = dw / ir; dx = 0; dy = (canvas.height - dh) / 2; }
+      else          { dh = canvas.height; dw = dh * ir; dy = 0; dx = (canvas.width - dw) / 2; }
+      ctx.drawImage(img, dx, dy, dw, dh);
+    }
+
+    window.addEventListener('scroll', () => {
+      const rect    = wrapper.getBoundingClientRect();
+      const scrolled = -rect.top;
+      const scrollH  = wrapper.offsetHeight - window.innerHeight;
+      const progress = Math.min(Math.max(scrolled / scrollH, 0), 1);
+      const frameIdx = Math.min(Math.round(progress * (total - 1)), total - 1);
+
+      if (frameIdx !== currentFrame) {
+        currentFrame = frameIdx;
+        drawFrame(frameIdx);
+      }
+
+      if (counter) counter.textContent = String(frameIdx + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+      if (bar) bar.style.width = (progress * 100) + '%';
+    });
+  }
+
+  // Load frame data and init — deferred so page loads fast
+  function loadFrames() {
+    if (typeof FRAMES1 !== 'undefined') setupFrameScroll('fs1-wrapper','fs1-canvas','fs1-counter','fs1-bar', FRAMES1);
+    if (typeof FRAMES2 !== 'undefined') setupFrameScroll('fs2-wrapper','fs2-canvas','fs2-counter','fs2-bar', FRAMES2);
+  }
+
+
+  const pxWrapper   = document.getElementById('parallax-wrapper');
+  const pxHeroWrap  = document.getElementById('px-hero-wrap');
+  const pxDecWrap   = document.getElementById('px-dec-wrap');
+  const pxHero      = document.getElementById('px-hero');
+  const pxDec       = document.getElementById('px-dec');
+  const pxText1     = document.getElementById('px-text-1');
+  const pxText2     = document.getElementById('px-text-2');
+  const pxBg        = document.getElementById('px-bg');
+  const pxStep1     = document.getElementById('px-step1');
+  const pxStep2     = document.getElementById('px-step2');
+  const pxStep3     = document.getElementById('px-step3');
+
+  function lerp(a, b, t) { return a + (b - a) * Math.min(Math.max(t, 0), 1); }
+  function clamp01(v) { return Math.min(Math.max(v, 0), 1); }
+
+  window.addEventListener('scroll', () => {
+    if (!pxWrapper) return;
+    const rect = pxWrapper.getBoundingClientRect();
+    const total = pxWrapper.offsetHeight - window.innerHeight;
+    const scrolled = -rect.top;
+    const progress = clamp01(scrolled / total); // 0 → 1 over 300vh
+
+    // Phase 1: 0–0.35 → hero visible, text1 fades in then out
+    // Phase 2: 0.35–0.65 → crossfade hero→dec, text1 out, text2 in
+    // Phase 3: 0.65–1.0 → dec fully visible, text2 out
+
+    const heroOpacity  = clamp01(1 - (progress - 0.25) / 0.25);
+    const decOpacity   = clamp01((progress - 0.35) / 0.3);
+    const text1Opacity = progress < 0.15
+      ? clamp01(progress / 0.15)
+      : clamp01(1 - (progress - 0.15) / 0.2);
+    const text2Opacity = progress > 0.5
+      ? clamp01((progress - 0.5) / 0.15) * clamp01(1 - (progress - 0.75) / 0.2)
+      : 0;
+
+    const heroScale = lerp(1, 0.82, clamp01((progress - 0.2) / 0.3));
+    const decScale  = lerp(0.88, 1, clamp01((progress - 0.35) / 0.35));
+    const bgOpacity = clamp01(1 - progress / 0.4);
+
+    pxHeroWrap.style.opacity = heroOpacity;
+    pxHero.style.transform   = `scale(${heroScale})`;
+    pxDecWrap.style.opacity  = decOpacity;
+    pxDec.style.transform    = `scale(${decScale})`;
+    pxText1.style.opacity    = text1Opacity;
+    pxText2.style.opacity    = text2Opacity;
+    pxBg.style.opacity       = bgOpacity;
+
+    // Progress dots
+    const activeColor = 'var(--gold)';
+    const inactiveColor = '#ddd';
+    pxStep1.style.background = progress < 0.33 ? activeColor : inactiveColor;
+    pxStep1.style.transform  = progress < 0.33 ? 'scale(1.6)' : 'scale(1)';
+    pxStep2.style.background = progress >= 0.33 && progress < 0.66 ? activeColor : inactiveColor;
+    pxStep2.style.transform  = progress >= 0.33 && progress < 0.66 ? 'scale(1.6)' : 'scale(1)';
+    pxStep3.style.background = progress >= 0.66 ? activeColor : inactiveColor;
+    pxStep3.style.transform  = progress >= 0.66 ? 'scale(1.6)' : 'scale(1)';
+  });
+
+  window.addEventListener('scroll',()=>{ document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60); });
+
+  // Hero parallax
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY<window.innerHeight)
+      document.getElementById('heroImg').style.transform=`translateY(${window.scrollY*0.12}px)`;
+  });
+
+  // Reveal
+  const ro=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('up'); }); },{threshold:0.18});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+  // Deconstructed
+  const decImg=document.getElementById('decImg');
+  new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) decImg.classList.add('visible'); }); },{threshold:0.25}).observe(decImg);
+
+  // Scroll dots
+  const secs=['hero','story','deconstruct','video1','video2','nutrition','product'];
+  const dots=document.querySelectorAll('.sdot');
+  function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const i=secs.indexOf(e.target.id);
+        dots.forEach(d=>d.classList.remove('active'));
+        if(i>=0) dots[i].classList.add('active');
+      }
+    });
+  },{threshold:0.5}).observe && secs.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const i=secs.indexOf(e.target.id);
+          dots.forEach(d=>d.classList.remove('active'));
+          if(i>=0) dots[i].classList.add('active');
+        }
+      });
+    },{threshold:0.5}).observe(el);
+  });
+</script>
+<script src="frames1.js" onload="loadFrames()"></script>
+<script src="frames2.js" onload="if(typeof FRAMES1!=='undefined') loadFrames()"></script>
+</body>
+</html>
