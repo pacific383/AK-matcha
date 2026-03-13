@@ -448,41 +448,23 @@
   </div>
 </section>
 
-<!-- DECONSTRUCT FRAME SCROLL -->
-<div id="fs-dec-wrapper" style="height:250vh; position:relative;">
-  <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:#0d1a0d;">
-
-    <!-- Fallback image shown before JS loads frames -->
-    <img id="fs-dec-fallback" src="deconstructed.png" alt="AK Matcha Deconstructed"
-      style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; padding:40px; opacity:1; transition:opacity 0.3s;">
-
-    <!-- Canvas draws frames on scroll -->
-    <canvas id="fs-dec-canvas" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity 0.6s;"></canvas>
-
-    <!-- Dark gradient overlays -->
-    <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(13,26,13,0.7) 0%, transparent 45%, transparent 100%); pointer-events:none; z-index:2;"></div>
-    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(13,26,13,0.3), transparent 25%, transparent 75%, rgba(13,26,13,0.4)); pointer-events:none; z-index:2;"></div>
-
-    <!-- Text overlay -->
-    <div style="position:absolute; top:50%; left:60px; transform:translateY(-50%); pointer-events:none; z-index:3;">
-      <p style="font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(201,168,76,0.85); margin-bottom:16px; display:flex; align-items:center; gap:12px;">
-        <span style="display:inline-block; width:24px; height:1px; background:var(--gold);"></span>What's Inside
-      </p>
-      <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(32px,4vw,58px); font-weight:300; color:white; line-height:1.15;">
-        Stone-ground<br><em style="color:#E8C96A;">perfection</em>
-      </h2>
-    </div>
-
-    <!-- Frame counter bottom center -->
-    <div style="position:absolute; bottom:36px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; z-index:3;">
-      <span id="fs-dec-counter" style="font-size:10px; letter-spacing:0.3em; color:rgba(201,168,76,0.6);">01 / 121</span>
-      <div style="width:100px; height:1px; background:rgba(201,168,76,0.2); position:relative; overflow:hidden;">
-        <div id="fs-dec-bar" style="position:absolute; left:0; top:0; height:100%; background:var(--gold); width:0%;"></div>
-      </div>
-    </div>
-
+<!-- DECONSTRUCT VIDEO -->
+<section style="height:100vh; position:relative; overflow:hidden; background:#0d1a0d; display:flex; align-items:center; justify-content:center;">
+  <video autoplay muted loop playsinline
+    style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.9;">
+    <source src="deconstruct_video.mp4" type="video/mp4">
+  </video>
+  <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(13,26,13,0.65) 0%, transparent 50%); pointer-events:none;"></div>
+  <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(13,26,13,0.3), transparent 25%, transparent 75%, rgba(13,26,13,0.4)); pointer-events:none;"></div>
+  <div style="position:relative; z-index:2; padding:0 80px; width:100%; max-width:1200px;">
+    <p style="font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(201,168,76,0.85); margin-bottom:16px; display:flex; align-items:center; gap:12px;">
+      <span style="display:inline-block; width:24px; height:1px; background:#C9A84C;"></span>What's Inside
+    </p>
+    <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(36px,5vw,72px); font-weight:300; color:white; line-height:1.15;">
+      Stone-ground<br><em style="color:#E8C96A;">perfection</em>
+    </h2>
   </div>
-</div>
+</section>
 
 <!-- STORY -->
 <section id="story">
@@ -761,10 +743,6 @@
 
   const _fsInited = {};
   function loadFrames() {
-    if (typeof FRAMES_DEC !== 'undefined' && !_fsInited['dec']) {
-      _fsInited['dec'] = true;
-      setupFrameScroll('fs-dec-wrapper','fs-dec-canvas','fs-dec-counter','fs-dec-bar', FRAMES_DEC);
-    }
     if (typeof FRAMES1 !== 'undefined' && !_fsInited['1']) {
       _fsInited['1'] = true;
       setupFrameScroll('fs1-wrapper','fs1-canvas','fs1-counter','fs1-bar', FRAMES1);
@@ -807,6 +785,5 @@
 </script>
 <script src="frames1.js" onload="loadFrames()"></script>
 <script src="frames2.js" onload="loadFrames()"></script>
-<script src="frames_dec.js" onload="loadFrames()"></script>
 </body>
 </html>
