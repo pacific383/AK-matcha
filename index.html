@@ -389,6 +389,126 @@
   .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
   .reveal.up { opacity:1; transform:translateY(0); }
   .d1 { transition-delay:0.15s; } .d2 { transition-delay:0.3s; } .d3 { transition-delay:0.45s; }
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media (max-width: 768px) {
+
+    /* Disable custom cursor on touch */
+    .cursor, .cursor-ring { display: none; }
+    body { cursor: auto; }
+
+    /* NAV */
+    nav { padding: 16px 20px; }
+    nav.scrolled { padding: 12px 20px; }
+    .nav-links { gap: 18px; }
+    .nav-links a { font-size: 9px; letter-spacing: 0.15em; }
+
+    /* Hide scroll dots on mobile */
+    .scroll-dots { display: none; }
+
+    /* HERO — stack vertically */
+    .hero-grid {
+      grid-template-columns: 1fr;
+      padding: 90px 24px 40px;
+      gap: 24px;
+      text-align: center;
+    }
+    .hero-left {
+      order: 1;
+      animation: fadeUp 1s ease 0.2s forwards;
+    }
+    .eyebrow { justify-content: center; }
+    .eyebrow::before { display: none; }
+    .gold-div { margin: 0 auto 32px; }
+    .hero-h1 { font-size: clamp(52px, 14vw, 80px); }
+    .hero-sub { font-size: 16px; }
+    .hero-img-stage {
+      order: 2;
+      animation: riseIn 1.2s ease 0.1s forwards;
+    }
+    .hero-img-stage img { width: clamp(200px, 55vw, 300px); }
+    .hero-right {
+      order: 3;
+      animation: fadeUp 1s ease 0.4s forwards;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      text-align: left;
+    }
+    .detail-sep { display: none; }
+    .detail-item { padding: 12px 8px; border-bottom: 1px solid rgba(201,168,76,0.12); }
+
+    /* STORY */
+    .story-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 72px 24px;
+    }
+    .big-num { font-size: 120px; top: -20px; left: -5px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-n { font-size: 36px; }
+
+    /* DECONSTRUCT VIDEO */
+    #deconstruct-vid { height: 60vh; }
+    #deconstruct-vid > div[style*="padding:0 80px"] { padding: 0 24px !important; }
+    #deconstruct-vid h2 { font-size: clamp(32px, 10vw, 56px) !important; }
+
+    /* RITUAL SECTION */
+    #ritual {
+      height: auto !important;
+      flex-direction: column !important;
+      padding: 80px 24px 60px !important;
+      gap: 40px;
+      justify-content: center !important;
+    }
+    #ritual > div[style*="z-index:2"] { max-width: 100% !important; width: 100% !important; }
+    #ritual h2 { font-size: clamp(44px, 12vw, 72px) !important; }
+    #ritual > div[style*="width:44%"] {
+      width: 80% !important;
+      max-width: 320px !important;
+    }
+
+    /* TASTE + SHOP COMBINED */
+    #product {
+      padding: 72px 20px !important;
+    }
+    #product > div {
+      grid-template-columns: 1fr !important;
+      gap: 48px !important;
+    }
+    #product > div > div:first-child h2 { font-size: clamp(36px, 10vw, 56px) !important; }
+    #product > div > div:last-child {
+      grid-template-columns: 1fr !important;
+      gap: 20px;
+    }
+
+    /* NUTRITION */
+    #nutrition > div { padding: 72px 20px !important; }
+    #nutrition > div > div[style*="grid-template-columns:repeat(3"] {
+      grid-template-columns: 1fr !important;
+    }
+    .nutr-card { padding: 36px 24px !important; }
+
+    /* FOOTER */
+    footer { padding: 56px 24px 32px; }
+    .footer-top {
+      flex-direction: column;
+      gap: 40px;
+    }
+    .f-cols { flex-direction: column; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links li:nth-child(3),
+    .nav-links li:nth-child(4) { display: none; }
+    .hero-right { grid-template-columns: 1fr; }
+    .detail-sep { display: none; }
+    #product > div > div:last-child {
+      grid-template-columns: 1fr !important;
+    }
+    .stats-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
