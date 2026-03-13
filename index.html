@@ -457,7 +457,7 @@
       style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; padding:40px; opacity:1; transition:opacity 0.3s;">
 
     <!-- Canvas draws frames on scroll -->
-    <canvas id="fs-dec-canvas" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity 0.5s;"></canvas>
+    <canvas id="fs-dec-canvas" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity 0.6s;"></canvas>
 
     <!-- Dark gradient overlays -->
     <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(13,26,13,0.7) 0%, transparent 45%, transparent 100%); pointer-events:none; z-index:2;"></div>
@@ -506,7 +506,7 @@
 <!-- FRAME SCROLL 1 -->
 <div id="fs1-wrapper" style="height:250vh; position:relative;">
   <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:#050a05;">
-    <canvas id="fs1-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></canvas>
+    <canvas id="fs1-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.6s;"></canvas>
     <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(5,10,5,0.3), transparent 40%, transparent 60%, rgba(5,10,5,0.5)); pointer-events:none;"></div>
     <div id="fs1-text" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px; pointer-events:none; transition:opacity 0.4s;">
       <p style="font-size:9px; letter-spacing:0.5em; text-transform:uppercase; color:rgba(201,168,76,0.8); margin-bottom:24px;">The Experience</p>
@@ -525,7 +525,7 @@
 <!-- FRAME SCROLL 2 -->
 <div id="fs2-wrapper" style="height:250vh; position:relative;">
   <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:#030805;">
-    <canvas id="fs2-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></canvas>
+    <canvas id="fs2-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.6s;"></canvas>
     <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(3,8,5,0.75) 0%, rgba(3,8,5,0.4) 50%, transparent 100%); pointer-events:none;"></div>
     <div id="fs2-text" style="position:absolute; inset:0; display:flex; align-items:center; padding:0 80px; pointer-events:none;">
       <div style="max-width:500px;">
@@ -759,11 +759,20 @@
     });
   }
 
-  // Init all three frame scrolls once frame data loads
+  const _fsInited = {};
   function loadFrames() {
-    if (typeof FRAMES1     !== 'undefined') setupFrameScroll('fs1-wrapper',    'fs1-canvas',    'fs1-counter',    'fs1-bar',    FRAMES1);
-    if (typeof FRAMES2     !== 'undefined') setupFrameScroll('fs2-wrapper',    'fs2-canvas',    'fs2-counter',    'fs2-bar',    FRAMES2);
-    if (typeof FRAMES_DEC  !== 'undefined') setupFrameScroll('fs-dec-wrapper', 'fs-dec-canvas', 'fs-dec-counter', 'fs-dec-bar', FRAMES_DEC);
+    if (typeof FRAMES_DEC !== 'undefined' && !_fsInited['dec']) {
+      _fsInited['dec'] = true;
+      setupFrameScroll('fs-dec-wrapper','fs-dec-canvas','fs-dec-counter','fs-dec-bar', FRAMES_DEC);
+    }
+    if (typeof FRAMES1 !== 'undefined' && !_fsInited['1']) {
+      _fsInited['1'] = true;
+      setupFrameScroll('fs1-wrapper','fs1-canvas','fs1-counter','fs1-bar', FRAMES1);
+    }
+    if (typeof FRAMES2 !== 'undefined' && !_fsInited['2']) {
+      _fsInited['2'] = true;
+      setupFrameScroll('fs2-wrapper','fs2-canvas','fs2-counter','fs2-bar', FRAMES2);
+    }
   }
 
 
@@ -779,23 +788,11 @@
   const ro=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('up'); }); },{threshold:0.18});
   document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-  // Deconstructed
-  const decImg=document.getElementById('decImg');
-  new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) decImg.classList.add('visible'); }); },{threshold:0.25}).observe(decImg);
-
   // Scroll dots
-  const secs=['hero','story','deconstruct','video1','video2','nutrition','product'];
+  const secs=['hero','fs-dec-wrapper','story','fs1-wrapper','nutrition','fs2-wrapper','product'];
   const dots=document.querySelectorAll('.sdot');
   function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
-  new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const i=secs.indexOf(e.target.id);
-        dots.forEach(d=>d.classList.remove('active'));
-        if(i>=0) dots[i].classList.add('active');
-      }
-    });
-  },{threshold:0.5}).observe && secs.forEach(id=>{
+  secs.forEach(id=>{
     const el=document.getElementById(id);
     if(el) new IntersectionObserver(entries=>{
       entries.forEach(e=>{
@@ -805,7 +802,7 @@
           if(i>=0) dots[i].classList.add('active');
         }
       });
-    },{threshold:0.5}).observe(el);
+    },{threshold:0.3}).observe(el);
   });
 </script>
 <script src="frames1.js" onload="loadFrames()"></script>
