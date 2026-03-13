@@ -500,18 +500,35 @@
   </div>
 </section>
 
-<!-- FRAME SCROLL 1 -->
-<div id="fs1-wrapper" style="height:250vh; position:relative;">
-  <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:#050a05;">
-    <canvas id="fs1-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.6s;"></canvas>
-    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(5,10,5,0.3), transparent 40%, transparent 60%, rgba(5,10,5,0.5)); pointer-events:none;"></div>
-    <div id="fs1-text" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px; pointer-events:none; transition:opacity 0.4s;">
-      <p style="font-size:9px; letter-spacing:0.5em; text-transform:uppercase; color:rgba(201,168,76,0.8); margin-bottom:24px;">The Experience</p>
-      <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(56px,9vw,120px); font-weight:300; color:white; line-height:1; margin-bottom:28px;">Ritual<br>in every<br><em style="color:#E8C96A;">sip</em></h2>
-      <p style="font-weight:300; font-size:14px; color:rgba(255,255,255,0.55); letter-spacing:0.08em; line-height:2.1; max-width:360px;">Begin your morning with intention. AK Matcha is not just a drink — it is a practice, a pause, a return to what matters.</p>
-    </div>
+<!-- RITUAL IN EVERY SIP — with rotating video -->
+<section id="ritual" style="height:100vh; position:relative; overflow:hidden; background:#050a05; display:flex; align-items:center; justify-content:space-between; padding:0 80px;">
+  <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(5,10,5,0.85) 0%, rgba(5,10,5,0.4) 50%, transparent 100%); pointer-events:none;"></div>
+  <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(5,10,5,0.3), transparent 25%, transparent 75%, rgba(5,10,5,0.4)); pointer-events:none;"></div>
+
+  <!-- Left: text -->
+  <div style="position:relative; z-index:2; max-width:440px;">
+    <p style="font-size:9px; letter-spacing:0.5em; text-transform:uppercase; color:rgba(201,168,76,0.8); margin-bottom:24px; display:flex; align-items:center; gap:12px;">
+      <span style="display:inline-block; width:24px; height:1px; background:#C9A84C;"></span>The Experience
+    </p>
+    <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(48px,7vw,100px); font-weight:300; color:white; line-height:1; margin-bottom:28px;">
+      Ritual<br>in every<br><em style="color:#E8C96A;">sip</em>
+    </h2>
+    <p style="font-weight:300; font-size:14px; color:rgba(255,255,255,0.55); letter-spacing:0.08em; line-height:2.1; max-width:320px;">
+      Begin your morning with intention. AK Matcha is not just a drink — it is a practice, a pause, a return to what matters.
+    </p>
   </div>
-</div>
+
+  <!-- Right: rotating product video -->
+  <div style="position:relative; z-index:2; width:44%; max-width:500px; display:flex; align-items:center; justify-content:center;">
+    <div style="position:absolute; width:90%; height:90%; border-radius:50%; background:radial-gradient(circle, rgba(122,158,126,0.18) 0%, transparent 70%);"></div>
+    <video autoplay muted loop playsinline id="rotating-vid"
+      style="width:100%; position:relative; z-index:1;
+             filter:drop-shadow(0 0 40px rgba(122,158,126,0.25));
+             mix-blend-mode:screen;">
+      <source src="rotating.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
 
 <!-- FRAME SCROLL 2 -->
 <div id="fs2-wrapper" style="height:250vh; position:relative;">
@@ -519,37 +536,22 @@
     <canvas id="fs2-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.6s;"></canvas>
     <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(3,8,5,0.85) 0%, rgba(3,8,5,0.5) 45%, transparent 100%); pointer-events:none;"></div>
 
-    <!-- Layout: text left, video right -->
-    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; padding:0 80px; z-index:2;">
-
-      <!-- Left: text -->
-      <div style="max-width:440px; pointer-events:none;">
+    <!-- Layout: text only -->
+    <div style="position:absolute; inset:0; display:flex; align-items:center; padding:0 80px; z-index:2;">
+      <div style="max-width:500px; pointer-events:none;">
         <p style="font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(201,168,76,0.85); margin-bottom:22px; display:flex; align-items:center; gap:14px;">
           <span style="display:inline-block; width:28px; height:1px; background:#C9A84C;"></span>Pure Craft
         </p>
         <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(40px,5vw,80px); font-weight:300; color:white; line-height:1.1; margin-bottom:28px;">
           Taste that<br><em style="color:#E8C96A;">speaks</em><br>for itself
         </h2>
-        <p style="font-weight:300; font-size:14px; color:rgba(255,255,255,0.55); line-height:2.1; max-width:320px; margin-bottom:36px;">
+        <p style="font-weight:300; font-size:14px; color:rgba(255,255,255,0.55); line-height:2.1; max-width:340px; margin-bottom:36px;">
           Shade-grown, hand-picked at peak harvest, stone-ground to perfection. Remarkably smooth, naturally sweet — zero bitterness, exceptional in every cup.
         </p>
         <a href="#product" style="display:inline-block; padding:15px 44px; border:1px solid rgba(255,255,255,0.4); font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:white; text-decoration:none; transition:all 0.4s; pointer-events:all;"
            onmouseover="this.style.background='#C9A84C';this.style.borderColor='#C9A84C'"
            onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,0.4)'">Discover More</a>
       </div>
-
-      <!-- Right: rotating product video -->
-      <div style="width:42%; max-width:480px; position:relative; display:flex; align-items:center; justify-content:center;">
-        <!-- Soft glow ring behind video -->
-        <div style="position:absolute; width:90%; height:90%; border-radius:50%; background:radial-gradient(circle, rgba(122,158,126,0.18) 0%, transparent 70%);"></div>
-        <video autoplay muted loop playsinline id="rotating-vid"
-          style="width:100%; border-radius:4px; position:relative; z-index:1;
-                 filter:drop-shadow(0 0 40px rgba(122,158,126,0.25));
-                 mix-blend-mode:screen;">
-          <source src="rotating.mp4" type="video/mp4">
-        </video>
-      </div>
-
     </div>
   </div>
 </div>
@@ -771,10 +773,6 @@
 
   const _fsInited = {};
   function loadFrames() {
-    if (typeof FRAMES1 !== 'undefined' && !_fsInited['1']) {
-      _fsInited['1'] = true;
-      setupFrameScroll('fs1-wrapper','fs1-canvas','fs1-counter','fs1-bar', FRAMES1);
-    }
     if (typeof FRAMES2 !== 'undefined' && !_fsInited['2']) {
       _fsInited['2'] = true;
       setupFrameScroll('fs2-wrapper','fs2-canvas','fs2-counter','fs2-bar', FRAMES2);
@@ -795,7 +793,7 @@
   document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
   // Scroll dots
-  const secs=['hero','fs-dec-wrapper','story','fs1-wrapper','nutrition','fs2-wrapper','product'];
+  const secs=['hero','fs-dec-wrapper','story','ritual','nutrition','fs2-wrapper','product'];
   const dots=document.querySelectorAll('.sdot');
   function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
   secs.forEach(id=>{
@@ -811,7 +809,6 @@
     },{threshold:0.3}).observe(el);
   });
 </script>
-<script src="frames1.js" onload="loadFrames()"></script>
 <script src="frames2.js" onload="loadFrames()"></script>
 </body>
 </html>
