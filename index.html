@@ -530,139 +530,78 @@
   </div>
 </section>
 
-<!-- FRAME SCROLL 2 -->
-<div id="fs2-wrapper" style="height:250vh; position:relative;">
-  <div style="position:sticky; top:0; height:100vh; overflow:hidden; background:#030805;">
-    <canvas id="fs2-canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.6s;"></canvas>
-    <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(3,8,5,0.85) 0%, rgba(3,8,5,0.5) 45%, transparent 100%); pointer-events:none;"></div>
+<!-- TASTE + SHOP COMBINED -->
+<section id="product" style="min-height:100vh; background:#030805; display:flex; align-items:center; padding:100px 80px;">
+  <div style="max-width:1400px; width:100%; margin:0 auto; display:grid; grid-template-columns:1fr 1.4fr; gap:80px; align-items:center;">
 
-    <!-- Layout: text only -->
-    <div style="position:absolute; inset:0; display:flex; align-items:center; padding:0 80px; z-index:2;">
-      <div style="max-width:500px; pointer-events:none;">
-        <p style="font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(201,168,76,0.85); margin-bottom:22px; display:flex; align-items:center; gap:14px;">
-          <span style="display:inline-block; width:28px; height:1px; background:#C9A84C;"></span>Pure Craft
-        </p>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(40px,5vw,80px); font-weight:300; color:white; line-height:1.1; margin-bottom:28px;">
-          Taste that<br><em style="color:#E8C96A;">speaks</em><br>for itself
-        </h2>
-        <p style="font-weight:300; font-size:14px; color:rgba(255,255,255,0.55); line-height:2.1; max-width:340px; margin-bottom:36px;">
-          Shade-grown, hand-picked at peak harvest, stone-ground to perfection. Remarkably smooth, naturally sweet — zero bitterness, exceptional in every cup.
-        </p>
-        <a href="#product" style="display:inline-block; padding:15px 44px; border:1px solid rgba(255,255,255,0.4); font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:white; text-decoration:none; transition:all 0.4s; pointer-events:all;"
-           onmouseover="this.style.background='#C9A84C';this.style.borderColor='#C9A84C'"
-           onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,0.4)'">Discover More</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- NUTRITION -->
-<section id="nutrition" style="background:var(--white); min-height:100vh; display:flex; align-items:center;">
-  <div style="max-width:1200px; margin:0 auto; padding:120px 60px; width:100%;">
-    <div style="text-align:center; margin-bottom:80px;" class="reveal">
-      <p class="section-tag" style="justify-content:center;">Why Matcha</p>
-      <h2 class="section-h2" style="max-width:500px; margin:0 auto;">Nourish your body,<br><em>elevate your mind</em></h2>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:rgba(201,168,76,0.1);">
-
-      <div class="nutr-card reveal" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
-        <div style="font-size:48px; margin-bottom:20px;">🧠</div>
-        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Calm Focus</h3>
-        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">Rich in L-theanine, AK Matcha promotes a state of relaxed alertness — sharp mental clarity without the jitters or crash of coffee.</p>
-      </div>
-
-      <div class="nutr-card reveal d1" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
-        <div style="font-size:48px; margin-bottom:20px;">⚡</div>
-        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Clean Energy</h3>
-        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">Natural caffeine paired with L-theanine delivers sustained, smooth energy that lasts for hours — perfect for morning rituals or afternoon focus sessions.</p>
-      </div>
-
-      <div class="nutr-card reveal d2" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
-        <div style="font-size:48px; margin-bottom:20px;">🛡️</div>
-        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Antioxidant Power</h3>
-        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">137× more antioxidants than standard green tea. Packed with EGCG catechins that protect cells, reduce inflammation, and support long-term health.</p>
-      </div>
-
-      <div class="nutr-card reveal" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
-        <div style="font-size:48px; margin-bottom:20px;">💚</div>
-        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Gut & Metabolism</h3>
-        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">Naturally supports a healthy metabolism and digestive balance. Zero sugar, zero additives — just pure organic matcha as nature intended.</p>
-      </div>
-
-      <div class="nutr-card reveal d1" style="background:var(--white); padding:52px 40px; border:1px solid rgba(201,168,76,0.14); transition:all 0.4s;">
-        <div style="font-size:48px; margin-bottom:20px;">✨</div>
-        <h3 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin-bottom:14px; color:var(--dark);">Skin & Glow</h3>
-        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey);">Chlorophyll and antioxidants work together to detoxify, reduce redness, and support a natural radiant complexion from the inside out.</p>
-      </div>
-
-      <div class="nutr-card reveal d2" style="background:var(--cream); padding:52px 40px; border:1px solid rgba(201,168,76,0.25); text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:all 0.4s;">
-        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:22px; color:var(--grey); line-height:1.8; margin-bottom:20px;">"Remarkably smooth,<br>naturally sweet —<br>the finest cup we've tasted."</p>
-        <div style="width:30px; height:1px; background:var(--gold); margin-bottom:16px;"></div>
-        <p style="font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold);">Taste Promise</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- PRODUCT -->
-<section id="product" style="background:var(--cream); min-height:100vh; display:flex; align-items:center;">
-  <div style="max-width:1200px; margin:0 auto; padding:120px 60px; width:100%;">
-
-    <div style="text-align:center; margin-bottom:80px;" class="reveal">
-      <p class="section-tag" style="justify-content:center;">Shop</p>
-      <h2 class="section-h2" style="max-width:500px; margin:0 auto;">Choose your<br><em>perfect blend</em></h2>
+    <!-- Left: Taste text -->
+    <div>
+      <p style="font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(201,168,76,0.85); margin-bottom:22px; display:flex; align-items:center; gap:14px;">
+        <span style="display:inline-block; width:28px; height:1px; background:#C9A84C;"></span>Pure Craft
+      </p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(40px,5vw,76px); font-weight:300; color:white; line-height:1.1; margin-bottom:28px;">
+        Taste that<br><em style="color:#E8C96A;">speaks</em><br>for itself
+      </h2>
+      <p style="font-weight:300; font-size:14px; color:rgba(255,255,255,0.55); line-height:2.1; max-width:340px; margin-bottom:20px;">
+        Shade-grown, hand-picked at peak harvest, stone-ground to perfection. Remarkably smooth, naturally sweet — zero bitterness, exceptional in every cup.
+      </p>
+      <div style="width:40px; height:1px; background:rgba(201,168,76,0.4); margin-top:40px;"></div>
     </div>
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:stretch;">
+    <!-- Right: Product cards -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
 
       <!-- Product 1: Ceremonial -->
-      <div class="product-card reveal" style="background:var(--white); border:1px solid rgba(201,168,76,0.2); padding:56px 48px; display:flex; flex-direction:column; position:relative; transition:all 0.4s;">
-        <div style="text-align:center; margin-bottom:40px;">
-          <img src="hero_image.png" alt="AK Matcha Ceremonial" style="width:65%; mix-blend-mode:multiply; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);"
-               onmouseover="this.style.transform='translateY(-10px) scale(1.04)'"
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.2); padding:36px 28px; display:flex; flex-direction:column; transition:border-color 0.3s;"
+           onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'"
+           onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
+        <div style="text-align:center; margin-bottom:24px;">
+          <img src="hero_image.png" alt="AK Matcha Ceremonial"
+               style="width:70%; mix-blend-mode:screen; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);"
+               onmouseover="this.style.transform='translateY(-8px) scale(1.04)'"
                onmouseout="this.style.transform='translateY(0) scale(1)'">
         </div>
-        <p class="section-tag">Ceremonial Grade</p>
-        <h3 style="font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:var(--dark); margin-bottom:16px; line-height:1.2;">First Harvest<br><em style="color:var(--sage);">Blend</em></h3>
-        <p style="font-weight:300; font-size:14px; line-height:2; color:var(--grey); margin-bottom:28px; flex:1;">A smooth, vibrant ceremonial-grade matcha with a naturally sweet flavour and bright vegetal notes. Perfect for daily rituals — beautifully balanced, zero bitterness.</p>
-        <ul style="list-style:none; margin-bottom:36px;">
-          <li style="font-size:12px; color:var(--grey); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.12); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> 100% Organic Certified</li>
-          <li style="font-size:12px; color:var(--grey); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.12); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> 30g tin · ~15–20 servings</li>
-          <li style="font-size:12px; color:var(--grey); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.12); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> Smooth, naturally sweet taste</li>
-          <li style="font-size:12px; color:var(--grey); padding:8px 0; display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> Stone-ground for peak nutrition</li>
+        <p style="font-size:8px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(201,168,76,0.8); margin-bottom:8px;">Ceremonial Grade</p>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:white; margin-bottom:12px; line-height:1.2;">First Harvest<br><em style="color:#E8C96A;">Blend</em></h3>
+        <p style="font-size:12px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.8; margin-bottom:20px; flex:1;">Smooth, naturally sweet. Perfect for daily rituals.</p>
+        <ul style="list-style:none; margin-bottom:20px;">
+          <li style="font-size:11px; color:rgba(255,255,255,0.4); padding:5px 0; border-bottom:1px solid rgba(201,168,76,0.1); display:flex; gap:8px; font-weight:300;"><span style="color:#C9A84C;">✦</span>100% Organic · 30g tin</li>
+          <li style="font-size:11px; color:rgba(255,255,255,0.4); padding:5px 0; display:flex; gap:8px; font-weight:300;"><span style="color:#C9A84C;">✦</span>~15–20 servings</li>
         </ul>
-        <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:28px;">
-          <span style="font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--dark);">$30</span>
-          <span style="font-size:11px; color:var(--grey); line-height:1.7;">Net Wt. 30g / 1.05oz<br>Free shipping over $60</span>
+        <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:20px;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:white;">$30</span>
+          <span style="font-size:10px; color:rgba(255,255,255,0.35);">/ 1.05oz</span>
         </div>
-        <a href="#" class="btn-dark" style="text-align:center;"><span>Add to Cart</span></a>
+        <a href="#" style="display:block; text-align:center; padding:13px; border:1px solid rgba(201,168,76,0.5); font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:white; text-decoration:none; transition:all 0.4s;"
+           onmouseover="this.style.background='#C9A84C';this.style.borderColor='#C9A84C'"
+           onmouseout="this.style.background='transparent';this.style.borderColor='rgba(201,168,76,0.5)'">Add to Cart</a>
       </div>
 
-      <!-- Product 2: Premium Ceremonial -->
-      <div class="product-card reveal d1" style="background:var(--dark); border:1px solid rgba(201,168,76,0.35); padding:56px 48px; display:flex; flex-direction:column; position:relative; transition:all 0.4s;">
-        <div style="position:absolute; top:24px; right:24px; background:var(--gold); color:white; font-size:8px; letter-spacing:0.25em; text-transform:uppercase; padding:6px 14px;">Best Seller</div>
-        <div style="text-align:center; margin-bottom:40px;">
-          <img src="hero_image.png" alt="AK Matcha Premium" style="width:65%; mix-blend-mode:screen; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);"
-               onmouseover="this.style.transform='translateY(-10px) scale(1.04)'"
+      <!-- Product 2: Premium -->
+      <div style="background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.4); padding:36px 28px; display:flex; flex-direction:column; position:relative; transition:border-color 0.3s;"
+           onmouseover="this.style.borderColor='rgba(201,168,76,0.8)'"
+           onmouseout="this.style.borderColor='rgba(201,168,76,0.4)'">
+        <div style="position:absolute; top:16px; right:16px; background:#C9A84C; color:white; font-size:7px; letter-spacing:0.2em; text-transform:uppercase; padding:5px 10px;">Best Seller</div>
+        <div style="text-align:center; margin-bottom:24px;">
+          <img src="reserve_image.png" alt="AK Matcha Reserve Collection"
+               style="width:70%; border-radius:4px; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);"
+               onmouseover="this.style.transform='translateY(-8px) scale(1.04)'"
                onmouseout="this.style.transform='translateY(0) scale(1)'">
         </div>
-        <p class="section-tag" style="color:rgba(201,168,76,0.9);">Premium Ceremonial Grade</p>
-        <h3 style="font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:white; margin-bottom:16px; line-height:1.2;">Reserve<br><em style="color:var(--gold-light);">Collection</em></h3>
-        <p style="font-weight:300; font-size:14px; line-height:2; color:rgba(255,255,255,0.6); margin-bottom:28px; flex:1;">Our finest expression — rare first-flush leaves, stone-ground to an ultra-fine powder with an extraordinary depth of flavour. Rich, silky, and intensely umami. A truly exceptional cup.</p>
-        <ul style="list-style:none; margin-bottom:36px;">
-          <li style="font-size:12px; color:rgba(255,255,255,0.6); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.15); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> 100% Organic · Premium Grade</li>
-          <li style="font-size:12px; color:rgba(255,255,255,0.6); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.15); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> 30g tin · ~15–20 servings</li>
-          <li style="font-size:12px; color:rgba(255,255,255,0.6); padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.15); display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> Rich, silky umami — no bitterness</li>
-          <li style="font-size:12px; color:rgba(255,255,255,0.6); padding:8px 0; display:flex; gap:10px; font-weight:300;"><span style="color:var(--gold);">✦</span> Ultra-fine stone-ground powder</li>
+        <p style="font-size:8px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(201,168,76,0.9); margin-bottom:8px;">Premium Ceremonial</p>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:white; margin-bottom:12px; line-height:1.2;">Reserve<br><em style="color:#E8C96A;">Collection</em></h3>
+        <p style="font-size:12px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.8; margin-bottom:20px; flex:1;">Rich, silky umami. An extraordinary cup.</p>
+        <ul style="list-style:none; margin-bottom:20px;">
+          <li style="font-size:11px; color:rgba(255,255,255,0.4); padding:5px 0; border-bottom:1px solid rgba(201,168,76,0.1); display:flex; gap:8px; font-weight:300;"><span style="color:#C9A84C;">✦</span>100% Organic · 30g tin</li>
+          <li style="font-size:11px; color:rgba(255,255,255,0.4); padding:5px 0; display:flex; gap:8px; font-weight:300;"><span style="color:#C9A84C;">✦</span>~15–20 servings</li>
         </ul>
-        <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:28px;">
-          <span style="font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:white;">$45</span>
-          <span style="font-size:11px; color:rgba(255,255,255,0.45); line-height:1.7;">Net Wt. 30g / 1.05oz<br>Free shipping over $60</span>
+        <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:20px;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:white;">$45</span>
+          <span style="font-size:10px; color:rgba(255,255,255,0.35);">/ 1.05oz</span>
         </div>
-        <a href="#" style="display:block; text-align:center; padding:17px 54px; background:var(--gold); color:white; font-size:10px; letter-spacing:0.35em; text-transform:uppercase; text-decoration:none; transition:all 0.4s;"
+        <a href="#" style="display:block; text-align:center; padding:13px; background:#C9A84C; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:white; text-decoration:none; transition:all 0.4s;"
            onmouseover="this.style.background='#b8943e'"
-           onmouseout="this.style.background='var(--gold)'">Add to Cart</a>
+           onmouseout="this.style.background='#C9A84C'">Add to Cart</a>
       </div>
 
     </div>
@@ -771,12 +710,8 @@
     });
   }
 
-  const _fsInited = {};
   function loadFrames() {
-    if (typeof FRAMES2 !== 'undefined' && !_fsInited['2']) {
-      _fsInited['2'] = true;
-      setupFrameScroll('fs2-wrapper','fs2-canvas','fs2-counter','fs2-bar', FRAMES2);
-    }
+    // frame scrolls removed
   }
 
 
@@ -793,7 +728,7 @@
   document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
   // Scroll dots
-  const secs=['hero','fs-dec-wrapper','story','ritual','nutrition','fs2-wrapper','product'];
+  const secs=['hero','fs-dec-wrapper','story','ritual','nutrition','product'];
   const dots=document.querySelectorAll('.sdot');
   function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
   secs.forEach(id=>{
@@ -809,6 +744,5 @@
     },{threshold:0.3}).observe(el);
   });
 </script>
-<script src="frames2.js" onload="loadFrames()"></script>
 </body>
 </html>
